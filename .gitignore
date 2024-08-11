@@ -1,0 +1,6 @@
+.idea/
+.ijwb/
+bazel-bin/
+bazel-micronaut-kapt-ksp/
+bazel-out/
+bazel-testlogs/

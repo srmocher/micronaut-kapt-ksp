@@ -1,0 +1,24 @@
+load("@rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+
+kt_jvm_library(
+    name = "hello_kapt",
+    srcs = glob(["*.kt"]),
+    deps = [
+        "//:micronaut_kapt",
+    ],
+)
+
+kt_jvm_library(
+    name = "hello_ksp",
+    srcs = glob(["*.kt"]),
+    plugins = [
+        "//:micronaut_ksp_type_element_plugin",
+        "//:micronaut_ksp_bean_processor_plugin",
+    ],
+    deps = [
+        "@maven_micronaut4//:io_micronaut_micronaut_context",
+        "@maven_micronaut4//:io_micronaut_micronaut_core",
+        "@maven_micronaut4//:jakarta_inject_jakarta_inject_api",
+        "@maven_micronaut4//:jakarta_validation_jakarta_validation_api",
+    ],
+)

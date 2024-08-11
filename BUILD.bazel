@@ -1,0 +1,106 @@
+load("@rules_kotlin//kotlin:core.bzl", "kt_ksp_plugin")
+
+java_plugin(
+    name = "micronaut_inject_bean_plugin",
+    processor_class = "io.micronaut.annotation.processing.BeanDefinitionInjectProcessor",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@maven_micronaut3//:io_micronaut_micronaut_aop",
+        "@maven_micronaut3//:io_micronaut_micronaut_inject",
+        "@maven_micronaut3//:io_micronaut_micronaut_inject_java",
+        "@maven_micronaut3//:io_micronaut_micronaut_validation",
+    ],
+)
+
+java_plugin(
+    name = "micronaut_inject_type_plugin",
+    processor_class = "io.micronaut.annotation.processing.TypeElementVisitorProcessor",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@maven_micronaut3//:io_micronaut_micronaut_aop",
+        "@maven_micronaut3//:io_micronaut_micronaut_inject",
+        "@maven_micronaut3//:io_micronaut_micronaut_inject_java",
+        "@maven_micronaut3//:io_micronaut_micronaut_validation",
+    ],
+)
+
+java_plugin(
+    name = "micronaut_inject_aggregating_type_plugin",
+    processor_class = "io.micronaut.annotation.processing.AggregatingTypeElementVisitorProcessor",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@maven_micronaut3//:io_micronaut_micronaut_aop",
+        "@maven_micronaut3//:io_micronaut_micronaut_inject",
+        "@maven_micronaut3//:io_micronaut_micronaut_inject_java",
+        "@maven_micronaut3//:io_micronaut_micronaut_validation",
+    ],
+)
+
+java_plugin(
+    name = "micronaut_package_config_plugin",
+    processor_class = "io.micronaut.annotation.processing.PackageConfigurationInjectProcessor",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@maven_micronaut3//:io_micronaut_micronaut_aop",
+        "@maven_micronaut3//:io_micronaut_micronaut_inject",
+        "@maven_micronaut3//:io_micronaut_micronaut_inject_java",
+        "@maven_micronaut3//:io_micronaut_micronaut_validation",
+    ],
+)
+
+java_plugin(
+    name = "micronaut_service_descriptor_plugin",
+    processor_class = "io.micronaut.annotation.processing.ServiceDescriptionProcessor",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@maven_micronaut3//:io_micronaut_micronaut_aop",
+        "@maven_micronaut3//:io_micronaut_micronaut_inject",
+        "@maven_micronaut3//:io_micronaut_micronaut_inject_java",
+        "@maven_micronaut3//:io_micronaut_micronaut_validation",
+    ],
+)
+
+java_library(
+    name = "micronaut_kapt",
+    exported_plugins = [
+        ":micronaut_inject_aggregating_type_plugin",
+        ":micronaut_inject_bean_plugin",
+        ":micronaut_inject_type_plugin",
+        ":micronaut_package_config_plugin",
+        ":micronaut_service_descriptor_plugin",
+    ],
+    visibility = ["//visibility:public"],
+    exports = [
+        "@maven_micronaut3//:io_micronaut_micronaut_aop",
+        "@maven_micronaut3//:io_micronaut_micronaut_inject",
+        "@maven_micronaut3//:io_micronaut_micronaut_inject_java",
+        "@maven_micronaut3//:io_micronaut_micronaut_runtime",
+        "@maven_micronaut3//:io_micronaut_micronaut_validation",
+        "@maven_micronaut3//:javax_inject_javax_inject",
+        "@maven_micronaut3//:javax_validation_validation_api",
+        "@maven_micronaut4//:jakarta_inject_jakarta_inject_api",
+        "@maven_micronaut4//:jakarta_validation_jakarta_validation_api",
+    ],
+)
+
+kt_ksp_plugin(
+    name = "micronaut_ksp_type_element_plugin",
+    processor_class = "io.micronaut.kotlin.processing.visitor.TypeElementSymbolProcessorProvider",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@maven_micronaut4//:io_micronaut_micronaut_inject_kotlin",
+        "@maven_micronaut4//:jakarta_inject_jakarta_inject_api",
+        "@maven_micronaut4//:jakarta_validation_jakarta_validation_api",
+    ],
+)
+
+kt_ksp_plugin(
+    name = "micronaut_ksp_bean_processor_plugin",
+    processor_class = "io.micronaut.kotlin.processing.beans.BeanDefinitionProcessorProvider",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@maven_micronaut4//:io_micronaut_micronaut_inject_kotlin",
+        "@maven_micronaut4//:jakarta_inject_jakarta_inject_api",
+        "@maven_micronaut4//:jakarta_validation_jakarta_validation_api",
+    ],
+)
