@@ -20,16 +20,16 @@ load("@rules_jvm_external//:setup.bzl", "rules_jvm_external_setup")
 rules_jvm_external_setup()
 
 http_archive(
-    name = "rules_kotlin",
+    name = "io_bazel_rules_kotlin",
     sha256 = "5766f1e599acf551aa56f49dab9ab9108269b03c557496c54acaf41f98e2b8d6",
     url = "https://github.com/bazelbuild/rules_kotlin/releases/download/v1.9.0/rules_kotlin-v1.9.0.tar.gz",
 )
 
-load("@rules_kotlin//kotlin:repositories.bzl", "kotlin_repositories")
+load("@io_bazel_rules_kotlin//kotlin:repositories.bzl", "kotlin_repositories")
 
 kotlin_repositories()  # if you want the default. Otherwise see custom kotlinc distribution below
 
-load("@rules_kotlin//kotlin:core.bzl", "kt_register_toolchains")
+load("@io_bazel_rules_kotlin//kotlin:core.bzl", "kt_register_toolchains")
 
 kt_register_toolchains()  # to use
 
@@ -46,6 +46,7 @@ maven_install(
         "io.micronaut:micronaut-core:4.3.0",
         "io.micronaut:micronaut-context:4.3.0",
     ],
+    fetch_sources = True,
     maven_install_json = "@//:maven_micronaut4_install.json",
     repositories = [
         "https://maven.google.com",
@@ -59,6 +60,19 @@ maven_install(
 )
 
 maven_install(
+    artifacts = [
+        # This line is an example coordinate, you'd copy-paste your actual dependencies here
+        # from your build.gradle or pom.xml file.
+        "org.ow2.asm:asm:9.7",
+        "com.google.code.gson:gson:2.12.0",
+    ],
+    maven_install_json = "//:maven_install.json",
+    repositories = [
+        "https://repo1.maven.org/maven2",
+    ],
+)
+
+maven_install(
     name = "maven_micronaut3",
     artifacts = [
         "io.micronaut:micronaut-inject-java:3.10.2",
@@ -68,6 +82,7 @@ maven_install(
         "jakarta.inject:jakarta.inject-api:2.0.0",
         "jakarta.validation:jakarta.validation-api:3.1.0",
     ],
+    fetch_sources = True,
     maven_install_json = "@//:maven_micronaut3_install.json",
     repositories = [
         "https://maven.google.com",
@@ -87,3 +102,6 @@ micronaut4()
 load("@maven_micronaut3//:defs.bzl", micronaut3 = "pinned_maven_install")
 
 micronaut3()
+
+load("@maven//:defs.bzl", "pinned_maven_install")
+pinned_maven_install()

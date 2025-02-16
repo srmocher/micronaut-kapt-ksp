@@ -1,4 +1,4 @@
-load("@rules_kotlin//kotlin:core.bzl", "kt_ksp_plugin")
+load("@io_bazel_rules_kotlin//kotlin:core.bzl", "kt_ksp_plugin")
 
 java_plugin(
     name = "micronaut_inject_bean_plugin",

@@ -4,3 +4,4 @@ bazel-bin/
 bazel-micronaut-kapt-ksp/
 bazel-out/
 bazel-testlogs/
+bazel-*/
