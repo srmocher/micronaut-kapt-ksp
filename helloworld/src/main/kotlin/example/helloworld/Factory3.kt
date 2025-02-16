@@ -1,4 +1,4 @@
-package brex.helloworld
+package example.helloworld
 
 import io.micronaut.context.annotation.Factory
 import jakarta.inject.Singleton
